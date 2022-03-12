@@ -7,8 +7,7 @@ const ListDonorComponent = () => {
    const navigate = useNavigate();
 
    function editDonor(id) {
-       console.log("Donor gets updated !")
-       console.log(`${id} will be edited...`)
+       console.log(`${id} will be updated...`)
        navigate(`/update-donor/${id}`);
    }
 
@@ -21,7 +20,6 @@ const ListDonorComponent = () => {
    }
    
     useEffect(() => {
-        console.log("1st UseEffect..")
         DonorService.getDonors().then((res) => {
             console.log(`First response : ${JSON.stringify(res.data)}`)
             setDonors(res.data)    //setting response to donors array
@@ -30,47 +28,29 @@ const ListDonorComponent = () => {
 
     function addDonor()
     {
-        console.log("Donor got added !")
         navigate('/add-donor');
     }
 
     function sortDonor()
     {
-       console.log("Inside Sorting : ");
-       console.log(donors)
        console.log(donors.filter((donor) => donor.age).sort((a,b) => a.age - b.age))
        setDonors(donors.filter((donor) => donor.age).sort((a,b) => a.age - b.age));
     }
 
-    // function groupBy(e)
-    // {
-    //     console.log("Blood Group "+e.target.value);
-    //     console.log(donors.filter((donor) => donor.bloodGroup).map(({bloodGroup}) => e.target.value === bloodGroup));
-    //     setDonors(donors.filter((donor) => donor.bloodGroup).map(({bloodGroup}) => e.target.value === bloodGroup));
-    // }
-
     const search = (searchText) => {
-        console.log(donors)
-        //console.log(donors.filter((donor) => donor.name).map(({name}) => name.toLowerCase().includes(searchText.toLowerCase())))
-        //donors.filter((donor) => donor.name).map(({name}) => name.toLowerCase().includes(searchText.toLowerCase()));
-        //setDonors(donors.filter((donor) => donor.name).map(({name}) => name.toLowerCase().includes(searchText.toLowerCase())));
-        // setDonors(donors.filter(donor => donor.name.toLowerCase().includes(searchText.toLowercase())));
-
-        console.log(donors.filter((donor) => donor.name).filter(({name}) => name.toLowerCase().includes(searchText.toLowerCase())));
         setDonors(donors.filter((donor) =>donor.name).filter(({name}) => name.toLowerCase().includes(searchText.toLowerCase())));
-    
     }
 
     return (
       <div>
           <h2 className='text-center'>Donors List</h2>
-          <div className='row'>
+          <div className='row'style={{display: 'flex', justifyContent: 'center', alignContent: 'center', marginTop: '20px', marginBottom: '20px'}}>
                 <button style={{width: 200}} className='btn btn-primary' onClick={addDonor}>Add Donor</button>
                 <input type="text" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style={{width: 200, marginLeft: 20}}
                     onChange={(e) => search(e.target.value)}/>
                 <button style={{width: 200, marginLeft: 10}} className='btn btn-primary' onClick={sortDonor}>Sort By Age</button>
           </div>
-            <div className='row'>
+            <div className='row' style={{marginTop: '25px'}}>
                 <table className='table table-striped table-bordered'>
                     <thead>
                         <tr>
